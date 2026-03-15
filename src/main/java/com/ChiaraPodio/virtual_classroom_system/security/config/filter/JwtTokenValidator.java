@@ -1,6 +1,7 @@
 package com.ChiaraPodio.virtual_classroom_system.security.config.filter;
 
 import com.ChiaraPodio.virtual_classroom_system.utils.JwtUtils;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,8 +28,8 @@ public class JwtTokenValidator extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(@org.jspecify.annotations.NonNull HttpServletRequest request,
-                                    @org.jspecify.annotations.NonNull HttpServletResponse response,
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
 
         String jwtToken = request.getHeader(HttpHeaders.AUTHORIZATION);
