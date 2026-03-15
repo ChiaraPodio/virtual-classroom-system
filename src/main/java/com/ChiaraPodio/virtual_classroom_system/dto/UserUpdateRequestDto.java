@@ -1,6 +1,5 @@
 package com.ChiaraPodio.virtual_classroom_system.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +12,9 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRequestDto {
+public class UserUpdateRequestDto {
 
     private String username;
-    private String password;
     private Boolean enabled;
     private Boolean accountNotExpired;
     private Boolean accountNotLocked;

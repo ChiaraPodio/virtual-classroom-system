@@ -1,11 +1,17 @@
 package com.ChiaraPodio.virtual_classroom_system.service;
 
+import com.ChiaraPodio.virtual_classroom_system.dto.UserChangePasswordRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.dto.UserRequestDto;
+import com.ChiaraPodio.virtual_classroom_system.dto.UserUpdateRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Role;
 import com.ChiaraPodio.virtual_classroom_system.model.UserSec;
 import com.ChiaraPodio.virtual_classroom_system.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,6 +21,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private IUserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private IRoleService roleService;
@@ -36,13 +45,62 @@ public class UserService implements IUserService {
 
     @Override
     public void deleteById(Long id) {
+
+        if(!userRepository.existsById(id)){
+            throw new RuntimeException("User not found");
+        }
+
         userRepository.deleteById(id);
     }
 
     @Override
-    public void update(UserSec userSec) {
+    public void update(Long user_id, UserUpdateRequestDto userUpdateRequest) {
+        UserSec user = this.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        save(userSec);
+        if (userUpdateRequest.getUsername()!=null) {
+            user.setUsername(userUpdateRequest.getUsername());
+        }
+
+        if (userUpdateRequest.getEnabled() != null) {
+            user.setEnabled(userUpdateRequest.getEnabled());
+        }
+        if (userUpdateRequest.getAccountNotExpired() != null) {
+            user.setAccountNotExpired(userUpdateRequest.getAccountNotExpired());
+        }
+        if (userUpdateRequest.getAccountNotLocked() != null) {
+            user.setAccountNotLocked(userUpdateRequest.getAccountNotLocked());
+        }
+        if (userUpdateRequest.getCredentialNotExpired() != null){
+            user.setCredentialNotExpired(userUpdateRequest.getCredentialNotExpired());
+        }
+        if (userUpdateRequest.getRolesIdList()!=null) {
+            Set<Role> rolesList = new HashSet<>();
+
+            for (Long role_id : userUpdateRequest.getRolesIdList()) {
+                Role role = roleService.findById(role_id)
+                        .orElseThrow(() -> new RuntimeException("Role not found"));
+                rolesList.add(role);
+            }
+            user.setRolesList(rolesList);
+        }
+        userRepository.save(user);
+    }
+
+    public void changePassword(UserChangePasswordRequestDto userChangePassword) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
+
+        UserSec user = userRepository.findUserEntityByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if (!passwordEncoder.matches(userChangePassword.getCurrentPassword(), user.getPassword())) {
+            throw new RuntimeException("Current password incorrect");
+        }
+
+        user.setPassword(passwordEncoder.encode(userChangePassword.getNewPassword()));
+        this.save(user);
+
     }
 
     @Override
@@ -51,15 +109,15 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void createUser(UserRequestDto userRequestDto) {
+    public UserSec createUser(UserRequestDto userRequestDto) {
         UserSec user = new UserSec();
 
         user.setUsername(userRequestDto.getUsername());
         user.setPassword(this.encriptPassword(userRequestDto.getPassword()));
-        user.setEnabled(userRequestDto.isEnabled());
-        user.setAccountNotExpired(userRequestDto.isAccountNotExpired());
-        user.setAccountNotLocked(userRequestDto.isAccountNotLocked());
-        user.setCredentialNotExpired(userRequestDto.isCredentialNotExpired());
+        user.setEnabled(userRequestDto.getEnabled());
+        user.setAccountNotExpired(userRequestDto.getAccountNotExpired());
+        user.setAccountNotLocked(userRequestDto.getAccountNotLocked());
+        user.setCredentialNotExpired(userRequestDto.getCredentialNotExpired());
 
         Set<Role> rolesList = new HashSet<>();
 
@@ -69,8 +127,7 @@ public class UserService implements IUserService {
             rolesList.add(role);
         }
         user.setRolesList(rolesList);
-        this.save(user);
-
+        return userRepository.save(user);
     }
 
 }

@@ -25,10 +25,10 @@ public class UserSec {
     private String username;
 
     private String password;
-    private boolean enabled;
-    private boolean accountNotExpired;
-    private boolean accountNotLocked;
-    private boolean credentialNotExpired;
+    private Boolean enabled;
+    private Boolean accountNotExpired;
+    private Boolean accountNotLocked;
+    private Boolean credentialNotExpired;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable (name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
