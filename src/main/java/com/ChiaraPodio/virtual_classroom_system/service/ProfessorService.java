@@ -1,5 +1,6 @@
 package com.ChiaraPodio.virtual_classroom_system.service;
 
+import com.ChiaraPodio.virtual_classroom_system.dto.ProfessorProfileUpdateRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.dto.ProfessorRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Course;
 import com.ChiaraPodio.virtual_classroom_system.model.Professor;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfessorService implements IProfessorService {
@@ -20,13 +22,13 @@ public class ProfessorService implements IProfessorService {
     private ICourseService courseService;
 
     @Override
-    public List<Professor> getAllProfessors() {
+    public List<Professor> findAll() {
         return professorRepository.findAll();
     }
 
     @Override
-    public Professor getProfessorById(Long id) {
-        return professorRepository.findById(id).orElse(null);
+    public Optional<Professor> findById(Long id) {
+        return professorRepository.findById(id);
     }
 
     @Override
@@ -35,8 +37,9 @@ public class ProfessorService implements IProfessorService {
     }
 
     @Override
-    public void editProfessor(Long professor_id, ProfessorRequestDto professorRequestDto) {
-        Professor newProfessor = this.getProfessorById(professor_id);
+    public void update(Long professor_id, ProfessorRequestDto professorRequestDto) {
+        Professor newProfessor = this.findById(professor_id)
+                .orElseThrow(() -> new RuntimeException("Professor not found"));
 
         if (professorRequestDto.getName() != null) {
             newProfessor.setName(professorRequestDto.getName());
@@ -48,23 +51,42 @@ public class ProfessorService implements IProfessorService {
             List<Course> courses = new ArrayList<>();
 
             for (Long idCourse : professorRequestDto.getCourses_id()) {
-                Course course = courseService.getCourseById(idCourse);
+                Course course = courseService.findById(idCourse)
+                        .orElseThrow(() -> new RuntimeException("Course not found"));
                 course.setProfessor(newProfessor);
                 courses.add(course);
             }
 
             newProfessor.setCourses(courses);
         }
-        this.saveProfessor(newProfessor);
+        professorRepository.save(newProfessor);
     }
 
     @Override
-    public void deleteProfessor(Long id) {
+    public void profileUpdate (Long professor_id, ProfessorProfileUpdateRequestDto profileUpdateRequestDto) {
+
+        Professor newProfessor = this.findById(professor_id)
+                .orElseThrow(() -> new RuntimeException("Professor not found"));
+
+        if (profileUpdateRequestDto.getName() != null) {
+            newProfessor.setName(profileUpdateRequestDto.getName());
+        }
+        if (profileUpdateRequestDto.getEmail() != null) {
+            newProfessor.setEmail(profileUpdateRequestDto.getEmail());
+        }
+        professorRepository.save(newProfessor);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        if(!professorRepository.existsById(id)){
+            throw new RuntimeException("Professor not found");
+        }
         professorRepository.deleteById(id);
     }
 
     @Override
-    public void createProfessor(ProfessorRequestDto professorRequestDto) {
+    public Professor createProfessor(ProfessorRequestDto professorRequestDto) {
         Professor professor = new Professor();
 
         professor.setName(professorRequestDto.getName());
@@ -73,12 +95,13 @@ public class ProfessorService implements IProfessorService {
         List<Course> courses = new ArrayList<>();
 
         for (Long idCourse : professorRequestDto.getCourses_id()) {
-            Course course = courseService.getCourseById(idCourse);
+            Course course = courseService.findById(idCourse)
+                    .orElseThrow(() -> new RuntimeException("Course not found"));
             courses.add(course);
         }
 
         professor.setCourses(courses);
-        this.saveProfessor(professor);
+        return professorRepository.save(professor);
     }
 
 }

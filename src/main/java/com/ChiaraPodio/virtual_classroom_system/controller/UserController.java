@@ -21,13 +21,13 @@ public class UserController {
     private IUserService userService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserSec>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserSec> getUserById(@PathVariable Long id) {
         return userService.findById(id).map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -54,9 +54,8 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/password")
-    @PreAuthorize("hasAnyRole('ADMIN', 'STUDENT', 'PROFESSOR')")
-    //@PreAuthorize("isAuthenticated()")
+    @PutMapping("/me/password")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Void> changePassword (@RequestBody UserChangePasswordRequestDto userChangePassword) {
         userService.changePassword(userChangePassword);
         return ResponseEntity.noContent().build();

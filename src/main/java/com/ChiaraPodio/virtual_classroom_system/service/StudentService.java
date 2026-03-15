@@ -1,5 +1,6 @@
 package com.ChiaraPodio.virtual_classroom_system.service;
 
+import com.ChiaraPodio.virtual_classroom_system.dto.StudentProfileUpdateRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.dto.StudentRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Course;
 import com.ChiaraPodio.virtual_classroom_system.model.Student;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService implements IStudentService {
@@ -20,23 +22,24 @@ public class StudentService implements IStudentService {
     private ICourseService courseService;
 
     @Override
-    public List<Student> getAllStudents() {
+    public List<Student> findAll() {
         return studentRepository.findAll();
     }
 
     @Override
-    public Student getStudentById(Long id) {
-        return studentRepository.findById(id).orElse(null);
+    public Optional<Student> findById(Long id) {
+        return studentRepository.findById(id);
     }
 
     @Override
-    public void saveStudent(Student student) {
+    public void save(Student student) {
         studentRepository.save(student);
     }
 
     @Override
-    public void editStudent (Long student_id, StudentRequestDto studentRequestDto) {
-        Student newStudent = this.getStudentById(student_id);
+    public void update (Long student_id, StudentRequestDto studentRequestDto) {
+        Student newStudent = this.findById(student_id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
 
         if (studentRequestDto.getName() != null) {
             newStudent.setName(studentRequestDto.getName());
@@ -48,23 +51,43 @@ public class StudentService implements IStudentService {
             List<Course> courses = new ArrayList<>();
 
             for (Long idCourse : studentRequestDto.getCourses_id()) {
-                Course course = courseService.getCourseById(idCourse);
+                Course course = courseService.findById(idCourse)
+                        .orElseThrow(() -> new RuntimeException("Course not found"));
                 course.getStudents().add(newStudent);
                 courses.add(course);
             }
 
             newStudent.setCourses(courses);
         }
-        this.saveStudent(newStudent);
+        studentRepository.save(newStudent);
     }
 
     @Override
-    public void deleteStudent(Long id) {
+    public void profileUpdate (Long student_id, StudentProfileUpdateRequestDto studentProfileUpdate) {
+
+    Student newStudent = this.findById(student_id)
+            .orElseThrow(() -> new RuntimeException("Student not found"));
+
+    if (studentProfileUpdate.getName() != null) {
+        newStudent.setName(studentProfileUpdate.getName());
+    }
+    if (studentProfileUpdate.getEmail() != null) {
+        newStudent.setEmail(studentProfileUpdate.getEmail());
+    }
+
+    studentRepository.save(newStudent);
+}
+
+    @Override
+    public void deleteById(Long id) {
+        if(!studentRepository.existsById(id)){
+            throw new RuntimeException("Student not found");
+        }
         studentRepository.deleteById(id);
     }
 
     @Override
-    public void createStudent (StudentRequestDto studentRequestDto) {
+    public Student createStudent (StudentRequestDto studentRequestDto) {
         Student student = new Student();
 
         student.setName(studentRequestDto.getName());
@@ -73,11 +96,12 @@ public class StudentService implements IStudentService {
         List<Course> courses = new ArrayList<>();
 
         for (Long idCourse : studentRequestDto.getCourses_id()) {
-            Course course = courseService.getCourseById(idCourse);
+            Course course = courseService.findById(idCourse)
+                    .orElseThrow(() -> new RuntimeException("Course not found"));
             courses.add(course);
         }
 
         student.setCourses(courses);
-        this.saveStudent(student);
+        return studentRepository.save(student);
     }
 }

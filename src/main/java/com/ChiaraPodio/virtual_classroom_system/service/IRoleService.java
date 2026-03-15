@@ -1,5 +1,6 @@
 package com.ChiaraPodio.virtual_classroom_system.service;
 
+import com.ChiaraPodio.virtual_classroom_system.dto.RoleRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Role;
 
 import java.util.List;
@@ -11,6 +12,7 @@ public interface IRoleService {
     Optional<Role> findById(Long id);
     Role save(Role role);
     void deleteById(Long id);
-    Role update(Role role);
+    void update(Long role_id, RoleRequestDto roleRequest);
+    public Role createRole (RoleRequestDto roleRequest);
 
 }
