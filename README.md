@@ -18,7 +18,7 @@ Simula el backend de una plataforma educativa donde administradores, profesores 
 * Maven
 
 ## Arquitectura
-El sistema, como todos mis proyectos, sigue una arquitectura en capas.
+El sistema sigue una arquitectura en capas.
 
 ### security.config
 Contiene la configuración relacionada con Spring Security, incluyendo:
@@ -36,7 +36,7 @@ Incluye clases auxiliares como JwtUtils
 Contiene los endpoints de la API REST que exponen la funcionalidad del sistema. Estos se encuentran securizados mediante anotaciones para que los usuarios accedan a los recursos en función de sus roles.
 Entre ellos se incluyen:
 
-* AuthenticationController
+AuthenticationController
 - Maneja la autenticación de usuarios
 - Genera tokens JWT para usuarios válidos
 
@@ -44,7 +44,7 @@ Entre ellos se incluyen:
 Cada entidad principal cuenta con su propio servicio que se encarga de validar datos, aplicar reglas de negocio, coordinar la interacción con los repositorios y gestionar las relaciones entre entidades.
 Además incluye:
 
-* UserDetailsServiceImp
+UserDetailsServiceImp
 - Integración con Spring Security para cargar usuarios desde la base de datos durante el proceso de autenticación.
 
 ### repository
