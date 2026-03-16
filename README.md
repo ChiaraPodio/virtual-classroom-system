@@ -67,7 +67,7 @@ Contienen los Data Transfer Objects utilizados para recibir datos desde el clien
 * Protección de endpoints mediante reglas de autorización
 * Uso de method security para validar permisos en métodos específicos
 * Uso de DTOs para desacoplar la API del modelo de datos
-* Uso de programación funcional en Java (Streams, Optional y expresiones lambda)
+* Uso de programación funcional (Streams, Optional y expresiones lambda)
 * Aplicación de buenas prácticas de organización y separación de responsabilidades
 * Proyecto orientado al desarrollo de APIs seguras en entornos educativos
 
