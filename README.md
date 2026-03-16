@@ -2,7 +2,7 @@
 
 API REST para una plataforma educativa desarrollada con Spring Boot que permite gestionar usuarios, permisos, roles, estudiantes, profesores y cursos dentro de un aula virtual.
 
-El sistema implementa autenticación y autorización mediante Spring Security, utilizando JWT y OAuth2, junto con un sistema de control de acceso basado en roles (RBAC) para proteger los endpoints y garantizar el acceso únicamente a usuarios autorizados.
+El sistema implementa autenticación y autorización mediante Spring Security, utilizando JWT y OAuth2, junto con un sistema de control de acceso basado en roles (RBAC) para proteger los endpoints y garantizar el acceso únicamente a usuarios autorizados. Las contraseñas se almacenan de forma segura mediante encriptación antes de persistirse en la base de datos.
 
 Simula el backend de una plataforma educativa donde administradores, profesores y estudiantes interactúan con los recursos disponibles según sus permisos.
 
@@ -64,6 +64,7 @@ Contienen los Data Transfer Objects utilizados para recibir datos desde el clien
 * Autenticación mediante JWT
 * Integración de OAuth2 Authentication
 * Sistema de control de acceso basado en roles (RBAC)
+* Encriptado de contraseñas antes de su almacenamiento en base de datos mediante PasswordEncoder
 * Protección de endpoints mediante reglas de autorización
 * Uso de method security para validar permisos en métodos específicos
 * Uso de DTOs para desacoplar la API del modelo de datos
