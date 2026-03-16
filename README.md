@@ -51,7 +51,7 @@ UserDetailsServiceImp
 Cada entidad del dominio posee su correspondiente repositorio.
 
 ### model
-Estas entidades modelan las relaciones del sistema educativo, permitiendo:
+Estas entidades modelan las relaciones del sistema, permitiendo:
 * Asociar usuarios con roles
 * Asignar permisos a roles
 * Relacionar profesores y estudiantes con cursos
