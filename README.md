@@ -69,7 +69,6 @@ Contienen los Data Transfer Objects utilizados para recibir datos desde el clien
 * Uso de DTOs para desacoplar la API del modelo de datos
 * Uso de programación funcional (Streams, Optional y expresiones lambda)
 * Aplicación de buenas prácticas de organización y separación de responsabilidades
-* Proyecto orientado al desarrollo de APIs seguras en entornos educativos
 
 
 ## Estado del proyecto
