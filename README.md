@@ -22,7 +22,7 @@ El sistema implementa un modelo de autorización basado en roles (RBAC), donde:
 
 El siguiente diagrama representa las principales entidades del sistema y sus relaciones:
 
-![Diagrama del modelo](docs/er-diagram-classroom.png)
+![Diagrama del modelo](docs:/er-diagram-classroom.png)
 
 ## Arquitectura
 El sistema sigue una arquitectura en capas.
