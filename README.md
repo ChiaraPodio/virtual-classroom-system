@@ -56,14 +56,14 @@ Estas entidades modelan las relaciones del sistema, permitiendo:
 Contienen los Data Transfer Objects utilizados para recibir datos desde el cliente, enviar respuestas estructuradas y evitar exponer directamente las entidades del modelo.
 
 ## Aspectos Destacados del Proyecto
-* Implementación de Spring Security para proteger la API
-* Autenticación mediante JWT
-* Integración de OAuth2 Authentication
-* Sistema de control de acceso basado en roles (RBAC)
-* Encriptado de contraseñas antes de su almacenamiento en base de datos mediante PasswordEncoder
+* Autenticación y autorización de usuarios en la API mediante Spring Security
+* Generación y validación de tokens JWT para acceso seguro
+* Integración de autenticación mediante OAuth2
+* Sistema de control de acceso basado en roles (RBAC) para gestionar permisos
+* Encriptado de contraseñas antes de su almacenamiento mediante PasswordEncoder
 * Protección de endpoints mediante reglas de autorización
-* Uso de method security para validar permisos en métodos específicos
-* Uso de DTOs para desacoplar la API del modelo de datos
+* Uso de seguridad a nivel de método para validar permisos en métodos específicos
+* Uso de DTOs para controlar la información expuesta por la API y desacoplar el modelo de datos
 * Uso de programación funcional (Streams, Optional y expresiones lambda)
 * Aplicación de buenas prácticas de organización y separación de responsabilidades
 
