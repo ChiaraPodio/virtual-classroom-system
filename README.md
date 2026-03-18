@@ -60,11 +60,6 @@ Estas entidades modelan las relaciones del sistema, permitiendo:
 ### dto
 Contienen los Data Transfer Objects utilizados para recibir datos desde el cliente, enviar respuestas estructuradas y evitar exponer directamente las entidades del modelo.
 
-## Diagrama del modelo
-El siguiente diagrama representa las principales entidades del sistema y sus relaciones:
-
-![Diagrama del modelo](docs/er-diagram-classroom.png)
-
 ## Aspectos Destacados del Proyecto
 * Autenticación y autorización de usuarios en la API mediante Spring Security
 * Generación y validación de tokens JWT para acceso seguro
@@ -76,6 +71,10 @@ El siguiente diagrama representa las principales entidades del sistema y sus rel
 * Uso de programación funcional (Streams, Optional y expresiones lambda)
 * Aplicación de buenas prácticas de organización y separación de responsabilidades
 
+## Diagrama del modelo
+El siguiente diagrama representa las principales entidades del sistema y sus relaciones:
+
+![Diagrama del modelo](docs/er-diagram-classroom.png)
 
 ## Estado del proyecto
 Proyecto actualmente en desarrollo.  
