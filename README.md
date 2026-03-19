@@ -1,6 +1,6 @@
 # Virtual Classroom System
 
-API REST para una plataforma educativa desarrollada con Spring Boot y Spring Security que permite gestionar estudiantes, profesores y cursos dentro de un aula virtual. Los administradores, profesores y estudiantes interactúan con los recursos disponibles según sus roles y permisos, garantizando el acceso únicamente a usuarios autorizados.
+API REST para una plataforma educativa desarrollada con Spring Boot y Spring Security que permite gestionar estudiantes, profesores y cursos dentro de un aula virtual. Los usuarios interactúan con los recursos disponibles según sus roles y permisos, garantizando un acceso autorizado.
 
 El sistema implementa un modelo de autorización basado en roles (RBAC), donde:
 - Los administradores gestionan usuarios, roles y permisos, y asignan profesores y estudiantes a cursos
