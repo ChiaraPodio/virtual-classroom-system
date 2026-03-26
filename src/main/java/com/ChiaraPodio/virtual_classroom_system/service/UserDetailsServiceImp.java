@@ -51,10 +51,10 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
         return new User(userSec.getUsername(),
                 userSec.getPassword(),
-                userSec.isEnabled(),
-                userSec.isAccountNotExpired(),
-                userSec.isCredentialNotExpired(),
-                userSec.isAccountNotLocked(),
+                userSec.getEnabled(),
+                userSec.getAccountNotExpired(),
+                userSec.getCredentialNotExpired(),
+                userSec.getAccountNotLocked(),
                 authorityList);
     }
 
