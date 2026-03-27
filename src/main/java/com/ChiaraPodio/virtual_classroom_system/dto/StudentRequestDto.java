@@ -16,6 +16,6 @@ public class StudentRequestDto {
 
     private String name;
     private String email;
-    private List<Long> courses_id;
+    //private List<Long> courses_id;
 
 }

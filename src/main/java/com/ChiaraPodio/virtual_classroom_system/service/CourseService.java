@@ -2,6 +2,7 @@ package com.ChiaraPodio.virtual_classroom_system.service;
 
 import com.ChiaraPodio.virtual_classroom_system.dto.CourseRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Course;
+import com.ChiaraPodio.virtual_classroom_system.model.Professor;
 import com.ChiaraPodio.virtual_classroom_system.model.Student;
 import com.ChiaraPodio.virtual_classroom_system.repository.ICourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,20 +55,44 @@ public class CourseService implements ICourseService {
         if (courseRequestDto.getName()!= null){
             newCourse.setName(courseRequestDto.getName());
         }
+
         if (courseRequestDto.getProfessor_id()!=null){
-            newCourse.setProfessor(professorService.findById(courseRequestDto.getProfessor_id()).
-                    orElseThrow(() -> new RuntimeException("Professor not found")));
+
+            Professor oldProfessor = newCourse.getProfessor();
+
+            Professor newProfessor = professorService.findById(courseRequestDto.getProfessor_id()).
+                    orElseThrow(() -> new RuntimeException("Professor not found"));
+
+            if (oldProfessor != null) {
+                oldProfessor.getCourses().remove(newCourse);
+            }
+
+            newCourse.setProfessor(newProfessor);
+
+            if (!newProfessor.getCourses().contains(newCourse)) {
+                newProfessor.getCourses().add(newCourse);
+            }
         }
         if(courseRequestDto.getStudents_id()!=null) {
-            List<Student> studentsList = new ArrayList<>();
+
+            if (newCourse.getStudents() != null) {
+                for (Student student : newCourse.getStudents()) {
+                    student.getCourses().remove(newCourse);
+                }
+            }
+
+            List<Student> newStudentsList = new ArrayList<>();
 
             for (Long studentId : courseRequestDto.getStudents_id()) {
                 Student student = studentService.findById(studentId)
                         .orElseThrow(() -> new RuntimeException("Student not found"));
-                studentsList.add(student);
+                newStudentsList.add(student);
+                if (!student.getCourses().contains(newCourse)) {
+                    student.getCourses().add(newCourse);
+                }
             }
 
-            newCourse.setStudents(studentsList);
+            newCourse.setStudents(newStudentsList);
         }
 
         courseRepository.save(newCourse);
@@ -78,8 +103,11 @@ public class CourseService implements ICourseService {
         Course course = new Course();
 
         course.setName(courseRequestDto.getName());
-        course.setProfessor(professorService.findById(courseRequestDto.getProfessor_id()).
-                orElseThrow(() -> new RuntimeException("Professor not found")));
+
+        Professor professor = professorService.findById(courseRequestDto.getProfessor_id()).
+                orElseThrow(() -> new RuntimeException("Professor not found"));
+        course.setProfessor(professor);
+        professor.getCourses().add(course);//trabajando en memoria, despues se persiste solo
 
         List<Student> studentsList = new ArrayList<>();
 
@@ -87,6 +115,7 @@ public class CourseService implements ICourseService {
             Student student = studentService.findById(studentId)
                     .orElseThrow(() -> new RuntimeException("Student not found"));
             studentsList.add(student);
+            student.getCourses().add(course);
         }
 
         course.setStudents(studentsList);

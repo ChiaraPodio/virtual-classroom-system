@@ -18,8 +18,8 @@ public class StudentService implements IStudentService {
     @Autowired
     private IStudentRepository studentRepository;
 
-    @Autowired
-    private ICourseService courseService;
+//    @Autowired
+//    private ICourseService courseService;
 
     @Override
     public List<Student> findAll() {
@@ -47,18 +47,18 @@ public class StudentService implements IStudentService {
         if (studentRequestDto.getEmail() != null) {
             newStudent.setEmail(studentRequestDto.getEmail());
         }
-        if (studentRequestDto.getCourses_id() != null) {
-            List<Course> courses = new ArrayList<>();
-
-            for (Long idCourse : studentRequestDto.getCourses_id()) {
-                Course course = courseService.findById(idCourse)
-                        .orElseThrow(() -> new RuntimeException("Course not found"));
-                course.getStudents().add(newStudent);
-                courses.add(course);
-            }
-
-            newStudent.setCourses(courses);
-        }
+//        if (studentRequestDto.getCourses_id() != null) {
+//            List<Course> courses = new ArrayList<>();
+//
+//            for (Long idCourse : studentRequestDto.getCourses_id()) {
+//                Course course = courseService.findById(idCourse)
+//                        .orElseThrow(() -> new RuntimeException("Course not found"));
+//                course.getStudents().add(newStudent);
+//                courses.add(course);
+//            }
+//
+//            newStudent.setCourses(courses);
+//        }
         studentRepository.save(newStudent);
     }
 
@@ -95,11 +95,11 @@ public class StudentService implements IStudentService {
 
         List<Course> courses = new ArrayList<>();
 
-        for (Long idCourse : studentRequestDto.getCourses_id()) {
-            Course course = courseService.findById(idCourse)
-                    .orElseThrow(() -> new RuntimeException("Course not found"));
-            courses.add(course);
-        }
+//        for (Long idCourse : studentRequestDto.getCourses_id()) {
+//            Course course = courseService.findById(idCourse)
+//                    .orElseThrow(() -> new RuntimeException("Course not found"));
+//            courses.add(course);
+//        }
 
         student.setCourses(courses);
         return studentRepository.save(student);

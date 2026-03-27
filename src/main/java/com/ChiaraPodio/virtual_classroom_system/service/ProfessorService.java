@@ -4,6 +4,7 @@ import com.ChiaraPodio.virtual_classroom_system.dto.ProfessorProfileUpdateReques
 import com.ChiaraPodio.virtual_classroom_system.dto.ProfessorRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Course;
 import com.ChiaraPodio.virtual_classroom_system.model.Professor;
+import com.ChiaraPodio.virtual_classroom_system.repository.ICourseRepository;
 import com.ChiaraPodio.virtual_classroom_system.repository.IProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ public class ProfessorService implements IProfessorService {
     @Autowired
     private IProfessorRepository professorRepository;
 
-    @Autowired
-    private ICourseService courseService;
+//    @Autowired
+//    private ICourseRepository courseRepository;
 
     @Override
     public List<Professor> findAll() {
@@ -47,18 +48,19 @@ public class ProfessorService implements IProfessorService {
         if (professorRequestDto.getEmail() != null) {
             newProfessor.setEmail(professorRequestDto.getEmail());
         }
-        if (professorRequestDto.getCourses_id() != null) {
-            List<Course> courses = new ArrayList<>();
-
-            for (Long idCourse : professorRequestDto.getCourses_id()) {
-                Course course = courseService.findById(idCourse)
-                        .orElseThrow(() -> new RuntimeException("Course not found"));
-                course.setProfessor(newProfessor);
-                courses.add(course);
-            }
-
-            newProfessor.setCourses(courses);
-        }
+//        if (professorRequestDto.getCourses_id() != null) {
+//            List<Course> courses = new ArrayList<>();
+//
+//            for (Long idCourse : professorRequestDto.getCourses_id()) {
+//                Course course = courseRepository.findById(idCourse)
+//                        .orElseThrow(() -> new RuntimeException("Course not found"));
+//                course.setProfessor(newProfessor);
+//                courseRepository.save(course);
+//                courses.add(course);
+//            }
+//
+//            newProfessor.setCourses(courses);
+//        }
         professorRepository.save(newProfessor);
     }
 
@@ -94,11 +96,13 @@ public class ProfessorService implements IProfessorService {
 
         List<Course> courses = new ArrayList<>();
 
-        for (Long idCourse : professorRequestDto.getCourses_id()) {
-            Course course = courseService.findById(idCourse)
-                    .orElseThrow(() -> new RuntimeException("Course not found"));
-            courses.add(course);
-        }
+//        for (Long idCourse : professorRequestDto.getCourses_id()) {
+//            Course course = courseRepository.findById(idCourse)
+//                    .orElseThrow(() -> new RuntimeException("Course not found"));
+//            course.setProfessor(professor);
+//            courseRepository.save(course);
+//            courses.add(course);
+//        }
 
         professor.setCourses(courses);
         return professorRepository.save(professor);
