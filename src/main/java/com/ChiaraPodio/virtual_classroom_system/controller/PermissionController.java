@@ -34,7 +34,7 @@ public class PermissionController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+   @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Permission> createPermission(@RequestBody PermissionRequestDto permissionRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(permissionService.createPermision(permissionRequest));
     }

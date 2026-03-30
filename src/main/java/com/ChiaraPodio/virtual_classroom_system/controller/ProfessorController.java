@@ -49,7 +49,7 @@ public class ProfessorController {
     }
 
     @PreAuthorize("hasAnyRole('PROFESSOR')")
-    @PutMapping("/{id}")
+    @PutMapping("/profile/{id}")
     public ResponseEntity<Void> editProfessorProfile(@PathVariable Long id,
                                                      @RequestBody ProfessorProfileUpdateRequestDto profileUpdateRequestDto) {
         professorService.profileUpdate(id, profileUpdateRequestDto);
