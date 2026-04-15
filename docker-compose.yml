@@ -5,18 +5,18 @@ services:
       - "8080:8080"
     environment:
       # Spring Security
-      SS_USER: chiarapo
-      SS_PASSWORD: 1234
-      ROLE: ADMIN
+      SS_USER: ${SS_USER}
+      SS_PASSWORD: ${SS_PASSWORD}
+      ROLE: ${ROLE}
 
       # Base de datos
-      BD_URL: jdbc:mysql://virtual_db:3306/virtual_classroom?createDatabaseIfNotExist=true&serverTimezone=UTC
-      BD_USER: root
-      BD_PASSWORD: rumba1999
+      BD_URL: ${BD_URL}
+      BD_USER: ${BD_USER}
+      BD_PASSWORD: ${BD_PASSWORD}
 
       # JWT
-      PRIVATE_KEY: 03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4
-      USER_GENERATOR: CHIARA-SEC
+      PRIVATE_KEY: ${PRIVATE_KEY}
+      USER_GENERATOR: ${USER_GENERATOR}
 
     restart: always
     depends_on:
@@ -26,9 +26,9 @@ services:
   virtual_db:
     image: mysql:8.0.33
     environment:
-      MYSQL_ROOT_PASSWORD: rumba1999
-      MYSQL_PASSWORD: rumba1999
-      MYSQL_DATABASE: virtual_classroom
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
     restart: always
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
