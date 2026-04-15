@@ -71,11 +71,12 @@ Contienen los Data Transfer Objects utilizados para recibir datos desde el clien
 * Aplicación de buenas prácticas de organización y separación de responsabilidades
 * Contenerización de la aplicación mediante Docker y orquestación con Docker Compose
 
+## Próximas mejoras en el proyecto
+* Integración de autenticación mediante OAuth2 con proveedores externos (Google, GitHub)
+* Generación de tokens JWT tras la autenticación OAuth2 para mantener un esquema de seguridad unificado
+
 ## Diagrama del modelo
 El siguiente diagrama representa las principales entidades del sistema y sus relaciones:
 
 ![Diagrama del modelo](docs/er-diagram-classroom.png) 
 
-## Próximas mejoras en el proyecto
-* Integración de autenticación mediante OAuth2 con proveedores externos (Google, GitHub)
-* Generación de tokens JWT tras la autenticación OAuth2 para mantener un esquema de seguridad unificado
