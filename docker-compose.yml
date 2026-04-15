@@ -1,0 +1,36 @@
+services:
+  app_virtualclass:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      # Spring Security
+      SS_USER: chiarapo
+      SS_PASSWORD: 1234
+      ROLE: ADMIN
+
+      # Base de datos
+      BD_URL: jdbc:mysql://virtual_db:3306/virtual_classroom?createDatabaseIfNotExist=true&serverTimezone=UTC
+      BD_USER: root
+      BD_PASSWORD: rumba1999
+
+      # JWT
+      PRIVATE_KEY: 03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4
+      USER_GENERATOR: CHIARA-SEC
+
+    restart: always
+    depends_on:
+      virtual_db:
+        condition: service_healthy
+
+  virtual_db:
+    image: mysql:8.0.33
+    environment:
+      MYSQL_ROOT_PASSWORD: rumba1999
+      MYSQL_PASSWORD: rumba1999
+      MYSQL_DATABASE: virtual_classroom
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
