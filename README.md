@@ -25,7 +25,6 @@ El sistema sigue una arquitectura en capas.
 Contiene la configuración relacionada con Spring Security, incluyendo:
 * Configuración de reglas de autorización
 * Integración de autenticación mediante JWT
-* Soporte para autenticación mediante OAuth2
 * Filtros de seguridad para validar tokens en cada request
 
 ### utils
@@ -70,12 +69,13 @@ Contienen los Data Transfer Objects utilizados para recibir datos desde el clien
 * Uso de seguridad a nivel de método para validar permisos en métodos específicos
 * Uso de programación funcional (Streams, Optional y expresiones lambda)
 * Aplicación de buenas prácticas de organización y separación de responsabilidades
+* Contenerización de la aplicación mediante Docker y orquestación con Docker Compose
 
 ## Diagrama del modelo
 El siguiente diagrama representa las principales entidades del sistema y sus relaciones:
 
-![Diagrama del modelo](docs/er-diagram-classroom.png)
+![Diagrama del modelo](docs/er-diagram-classroom.png) 
 
-## Estado del proyecto
-Proyecto actualmente en desarrollo.  
-Se continúan incorporando mejoras en seguridad, organización del código y funcionalidades adicionales.
+## Próximas mejoras en el proyecto
+* Integración de autenticación mediante OAuth2 con proveedores externos (Google, GitHub)
+* Generación de tokens JWT tras la autenticación OAuth2 para mantener un esquema de seguridad unificado
