@@ -2,8 +2,7 @@ package com.ChiaraPodio.virtual_classroom_system.controller;
 
 import com.ChiaraPodio.virtual_classroom_system.dto.CourseRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Course;
-import com.ChiaraPodio.virtual_classroom_system.service.CourseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ChiaraPodio.virtual_classroom_system.service.ICourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,8 +14,11 @@ import java.util.List;
 @RequestMapping("/courses")
 public class CourseController {
 
-    @Autowired
-    private CourseService courseService;
+    private final ICourseService courseService;
+
+    public CourseController(ICourseService courseService) {
+        this.courseService = courseService;
+    }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'STUDENT', 'PROFESSOR')")
     @GetMapping

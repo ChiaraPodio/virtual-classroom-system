@@ -3,7 +3,6 @@ package com.ChiaraPodio.virtual_classroom_system.controller;
 import com.ChiaraPodio.virtual_classroom_system.dto.RoleRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Role;
 import com.ChiaraPodio.virtual_classroom_system.service.IRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,8 +14,11 @@ import java.util.List;
 @RequestMapping("/api/roles")
 public class RoleController {
 
-    @Autowired
-    private IRoleService roleService;
+    private final IRoleService roleService;
+
+    public RoleController(IRoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN')")

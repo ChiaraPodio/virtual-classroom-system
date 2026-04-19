@@ -6,7 +6,6 @@ import com.ChiaraPodio.virtual_classroom_system.dto.UserUpdateRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Role;
 import com.ChiaraPodio.virtual_classroom_system.model.UserSec;
 import com.ChiaraPodio.virtual_classroom_system.repository.IUserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,14 +18,17 @@ import java.util.*;
 @Service
 public class UserService implements IUserService {
 
-    @Autowired
-    private IUserRepository userRepository;
+    private final IUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final IRoleService roleService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private IRoleService roleService;
+    public UserService(IUserRepository userRepository,
+                       PasswordEncoder passwordEncoder,
+                       IRoleService roleService) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
+    }
 
     @Override
     public List<UserSec> findAll() {

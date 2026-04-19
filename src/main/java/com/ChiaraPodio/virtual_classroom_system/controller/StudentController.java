@@ -3,8 +3,7 @@ package com.ChiaraPodio.virtual_classroom_system.controller;
 import com.ChiaraPodio.virtual_classroom_system.dto.StudentProfileUpdateRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.dto.StudentRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Student;
-import com.ChiaraPodio.virtual_classroom_system.service.StudentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ChiaraPodio.virtual_classroom_system.service.IStudentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,8 +15,11 @@ import java.util.List;
 @RequestMapping("/students")
 public class StudentController {
 
-    @Autowired
-    private StudentService studentService;
+    private final IStudentService studentService;
+
+    public StudentController(IStudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'PROFESSOR')")
     @GetMapping

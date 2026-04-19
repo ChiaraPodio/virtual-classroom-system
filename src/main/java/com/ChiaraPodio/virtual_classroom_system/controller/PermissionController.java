@@ -1,11 +1,8 @@
 package com.ChiaraPodio.virtual_classroom_system.controller;
 
 import com.ChiaraPodio.virtual_classroom_system.dto.PermissionRequestDto;
-import com.ChiaraPodio.virtual_classroom_system.dto.RoleRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Permission;
-import com.ChiaraPodio.virtual_classroom_system.model.Role;
 import com.ChiaraPodio.virtual_classroom_system.service.IPermissionService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,8 +14,11 @@ import java.util.List;
 @RequestMapping("/api/permissions")
 public class PermissionController {
 
-    @Autowired
-    private IPermissionService permissionService;
+    private final IPermissionService permissionService;
+
+    public PermissionController(IPermissionService permissionService) {
+        this.permissionService = permissionService;
+    }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")

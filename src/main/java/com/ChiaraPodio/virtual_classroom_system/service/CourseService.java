@@ -5,7 +5,6 @@ import com.ChiaraPodio.virtual_classroom_system.model.Course;
 import com.ChiaraPodio.virtual_classroom_system.model.Professor;
 import com.ChiaraPodio.virtual_classroom_system.model.Student;
 import com.ChiaraPodio.virtual_classroom_system.repository.ICourseRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,14 +14,17 @@ import java.util.Optional;
 @Service
 public class CourseService implements ICourseService {
 
-    @Autowired
-    private ICourseRepository courseRepository;
+    private final ICourseRepository courseRepository;
+    private final IProfessorService professorService;
+    private final IStudentService studentService;
 
-    @Autowired
-    private IProfessorService professorService;
-
-    @Autowired
-    private IStudentService studentService;
+    public CourseService(ICourseRepository courseRepository,
+                         IProfessorService professorService,
+                         IStudentService studentService) {
+        this.courseRepository = courseRepository;
+        this.professorService = professorService;
+        this.studentService = studentService;
+    }
 
     @Override
     public List<Course> findAll() {

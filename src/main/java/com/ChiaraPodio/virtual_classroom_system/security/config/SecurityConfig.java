@@ -2,7 +2,6 @@ package com.ChiaraPodio.virtual_classroom_system.security.config;
 
 import com.ChiaraPodio.virtual_classroom_system.security.config.filter.JwtTokenValidator;
 import com.ChiaraPodio.virtual_classroom_system.utils.JwtUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,8 +24,11 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
+
+    public SecurityConfig(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {

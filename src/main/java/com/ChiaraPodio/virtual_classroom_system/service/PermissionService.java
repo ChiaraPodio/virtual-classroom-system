@@ -3,7 +3,6 @@ package com.ChiaraPodio.virtual_classroom_system.service;
 import com.ChiaraPodio.virtual_classroom_system.dto.PermissionRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Permission;
 import com.ChiaraPodio.virtual_classroom_system.repository.IPermissionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.Optional;
 @Service
 public class PermissionService implements IPermissionService {
 
-    @Autowired
-    private IPermissionRepository permissionRepository;
+    private final IPermissionRepository permissionRepository;
+
+    public PermissionService(IPermissionRepository permissionRepository) {
+        this.permissionRepository = permissionRepository;
+    }
 
     @Override
     public List<Permission> findAll() {

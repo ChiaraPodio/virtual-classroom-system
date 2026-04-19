@@ -15,8 +15,11 @@ import java.util.Optional;
 @Service
 public class StudentService implements IStudentService {
 
-    @Autowired
-    private IStudentRepository studentRepository;
+    private final IStudentRepository studentRepository;
+
+    public StudentService(IStudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
 //    @Autowired
 //    private ICourseService courseService;

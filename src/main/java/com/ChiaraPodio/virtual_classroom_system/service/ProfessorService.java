@@ -4,9 +4,7 @@ import com.ChiaraPodio.virtual_classroom_system.dto.ProfessorProfileUpdateReques
 import com.ChiaraPodio.virtual_classroom_system.dto.ProfessorRequestDto;
 import com.ChiaraPodio.virtual_classroom_system.model.Course;
 import com.ChiaraPodio.virtual_classroom_system.model.Professor;
-import com.ChiaraPodio.virtual_classroom_system.repository.ICourseRepository;
 import com.ChiaraPodio.virtual_classroom_system.repository.IProfessorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,11 +14,11 @@ import java.util.Optional;
 @Service
 public class ProfessorService implements IProfessorService {
 
-    @Autowired
-    private IProfessorRepository professorRepository;
+    private final IProfessorRepository professorRepository;
 
-//    @Autowired
-//    private ICourseRepository courseRepository;
+    public ProfessorService(IProfessorRepository professorRepository) {
+        this.professorRepository = professorRepository;
+    }
 
     @Override
     public List<Professor> findAll() {

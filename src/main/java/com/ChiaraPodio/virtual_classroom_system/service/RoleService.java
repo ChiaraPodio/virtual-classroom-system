@@ -15,11 +15,14 @@ import java.util.Set;
 @Service
 public class RoleService implements IRoleService {
 
-    @Autowired
-    private IRoleRepository roleRepository;
+    private final IRoleRepository roleRepository;
+    private final IPermissionService permissionService;
 
-    @Autowired
-    private IPermissionService permissionService;
+    public RoleService(IRoleRepository roleRepository,
+                       IPermissionService permissionService) {
+        this.roleRepository = roleRepository;
+        this.permissionService = permissionService;
+    }
 
     @Override
     public List<Role> findAll() {

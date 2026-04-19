@@ -24,14 +24,17 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImp implements UserDetailsService {
 
-    @Autowired
-    private IUserRepository userRepo;
+    private final IUserRepository userRepo;
+    private final JwtUtils jwtUtils;
+    private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private JwtUtils jwtUtils;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserDetailsServiceImp(IUserRepository userRepo,
+                                 JwtUtils jwtUtils,
+                                 PasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
+        this.jwtUtils = jwtUtils;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException {
