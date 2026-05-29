@@ -61,7 +61,6 @@ Contienen los Data Transfer Objects utilizados para recibir datos desde el clien
 ## Aspectos Destacados del Proyecto
 * Autenticación y autorización de usuarios en la API mediante Spring Security
 * Generación y validación de tokens JWT para acceso seguro
-* Integración de autenticación mediante OAuth2
 * Sistema de control de acceso basado en roles (RBAC) para gestionar permisos
 * Encriptado de contraseñas antes de su almacenamiento mediante PasswordEncoder
 * Protección de endpoints mediante reglas de autorización
