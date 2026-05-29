@@ -13,7 +13,6 @@ El sistema implementa un modelo de autorización basado en roles (RBAC), donde:
 * Spring Boot
 * Spring Security
 * JWT (JSON Web Tokens)
-* Autenticación mediante OAuth2
 * JPA / Hibernate
 * MySQL
 * Maven
